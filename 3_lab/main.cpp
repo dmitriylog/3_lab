@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -91,9 +92,54 @@ public:
             goods[i].displayInfo();
         }
     }
+
+};
+
+class Busket{
+private:
+    vector <Goods> bought_products;
+
+public:
+    Busket() = default; // конструктор по умолчанию
+    Busket(const vector <Goods>& init_products):bought_products(init_products){} // конструктор купленных продуктов
+
+    const vector <Goods>& get_bought_prod() const {
+        return bought_products;
+    }
+
+    void addProduct(const Goods& product){
+        bought_products.push_back(product);
+    }
+
+    bool remove_product(const string& prod_name){
+        auto it = find_if(bought_products.begin(),bought_products.end(),[prod_name](const Goods& p){return p.getName() == prod_name;});
+        if (it != bought_products.end()){
+            bought_products.erase(it);
+            return true;
+        }
+        return false;
+    }
+
+    void clear_busket(){
+        bought_products.clear();
+        cout << "Корзина очищена!" << endl;
+    }
+
+    void display_busket() const {
+        cout << "Корзина покупок" << endl;
+        if (bought_products.empty()){
+            cout << "Корзина пуста!" << endl;
+            return;
+        }
+        for (size_t i = 0; i<bought_products.size();i++){
+            cout << (i+1) << ". ";
+            bought_products[i].displayInfo();
+        }
+    }
+
 };
 
 int main()
 {
 
-}
+};
