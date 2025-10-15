@@ -7,6 +7,7 @@
 
 using namespace std;
 
+// класс товары
 class Goods{
 private:
     string name;
@@ -42,11 +43,12 @@ public:
     }
 
     void displayInfo() const {
-        cout << "Товар: " << name << "\nЦена: " << price << " руб\n Рейтинг: " << rating << endl;
+        cout << "\nТовар: " << name << "\nЦена: " << price << " $\n Рейтинг: " << rating << endl;
     }
 
 };
 
+// класс категория товаров
 class Category{
 private:
     string name;
@@ -83,9 +85,9 @@ public:
     }
 
     void diplayInfo() const {
-        cout << "Категория: " << name << endl;
-        cout << "Количество товаров: " << goods.size() << endl;
-        cout << "Товары: " << endl;
+        cout << "\nКатегория: " << name << endl;
+        cout << "\nКоличество товаров: " << goods.size() << endl;
+        cout << "\nТовары: " << endl;
 
         for (size_t i = 0; i < goods.size(); ++i){
             cout << " " << (i+1) << ". ";
@@ -95,6 +97,7 @@ public:
 
 };
 
+// класс корзина
 class Busket{
 private:
     vector <Goods> bought_products;
@@ -156,6 +159,7 @@ public:
 
 };
 
+// класс пользователь
 class User {
 private:
     string login;
@@ -200,28 +204,28 @@ public:
     // для работы с корзиной пользователя
     void addToBusket(const Goods& product){
         busket.addProduct(product);
-        cout << "=== Товар '" << product.getName() << "' добавлен в корзину пользователя === " << login << endl;
+        cout << "\n=== Товар '" << product.getName() << "' добавлен в корзину пользователя === " << login << endl;
     }
 
     bool removeFromBusket(const string& productName){
         bool result = busket.remove_product(productName);
         if (result) {
-            cout << "=== Товар '" << productName << "' удален из корзины пользователя === " << login << endl;
+            cout << "\n=== Товар '" << productName << "' удален из корзины пользователя === " << login << endl;
         }
         return result;
     }
 
     void clearUserBusket(){
         busket.clear_busket();
-        cout << "=== Корзина пользователя " << login << " очищена === " << endl;
+        cout << "\n=== Корзина пользователя " << login << " очищена === " << endl;
     }
 
     void displayUserBusket() const {
-        cout << " === Корзина пользователя: " << login << " === " << endl;
+        cout << "\n === Корзина пользователя: " << login << " === " << endl;
         busket.display_busket();
         if (!busket.isEmpty()){
-            cout << "Общая стоимость: " << busket.getTotalPrice() << " $ " << endl;
-            cout << "Количество товаров: " << busket.getProductCount() << endl;
+            cout << "\nОбщая стоимость: " << busket.getTotalPrice() << " $ " << endl;
+            cout << "\nКоличество товаров: " << busket.getProductCount() << endl;
         }
         cout << " ------------------------------- " << endl;
     }
@@ -238,12 +242,34 @@ public:
 
 int main()
 {
+    system("chcp 1251");
+    system("cls");
 
+    // создание товаров
+    Goods laptop("ASUS Vivobook laptop", 75000,4.95);
+    Goods mouse("LogiTech mouse", 700,4.7);
+    Goods cooler("ASUS Cooler", 3500,4.87);
+    Goods flash_USB("Flash-USB 64GB",1000,4.95);
+    Goods headphones("Headphones JBL", 20000,4.95);
 
+    // информация о категории
+    Category Tech("Technics");
+    Tech.addGoods(laptop);
+    Tech.addGoods(mouse);
+    Tech.addGoods(cooler);
+    Tech.addGoods(flash_USB);
+    Tech.addGoods(headphones);
+    Tech.diplayInfo();
 
+    // создание пользователей
+    User dmitriy("dmitriy","password8081");
+    dmitriy.displayUserInfo();
 
-
-
+    dmitriy.addToBusket(laptop);
+    dmitriy.addToBusket(headphones);
+    dmitriy.addToBusket(flash_USB);
+    dmitriy.displayUserBusket();
+    dmitriy.clearUserBusket();
 
 
 };
